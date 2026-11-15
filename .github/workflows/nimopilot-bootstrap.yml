@@ -49,7 +49,7 @@ jobs:
       - name: Install Chrome for Testing
         run: pnpm install-chrome
       - name: Browser scenarios
-        run: pnpm autorun scenarios
+        run: pnpm autorun scenarios --timeout 1200
       - name: Build extension
         run: pnpm build
       - name: Package extension
@@ -62,5 +62,6 @@ jobs:
           path: |
             dist/
             dist-zip/
+            fixtures/.results/
           if-no-files-found: warn
           retention-days: 14
