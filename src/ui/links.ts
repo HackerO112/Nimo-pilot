@@ -3,4 +3,4 @@
 
 /** A page of the website (`/docs` is the help pages), tagged with the place that links to it. */
 export const websiteUrl = (path: '/' | '/docs', place: 'side-panel' | 'settings' | 'about') =>
-  `https://nanobrowser.ai${path}?utm_source=nanobrowser-extension&utm_medium=${place}`;
+  `https://HackerO112/Nimo-pilot.ai${path}?utm_source=HackerO112/Nimo-pilot-extension&utm_medium=${place}`;
