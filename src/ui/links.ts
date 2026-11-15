@@ -1,6 +1,8 @@
-// Links to the Nanobrowser website. The tag names only the place in the extension the link is on, so the site can
-// count the visits that came from the extension; it carries no identifier.
+// NimoPilot project links. There is no separate NimoPilot hosted website.
 
-/** A page of the website (`/docs` is the help pages), tagged with the place that links to it. */
-export const websiteUrl = (path: '/' | '/docs', place: 'side-panel' | 'settings' | 'about') =>
-  `https://HackerO112/Nimo-pilot.ai${path}?utm_source=HackerO112/Nimo-pilot-extension&utm_medium=${place}`;
+export type WebsitePath = '/' | '/docs';
+export type LinkPlace = 'side-panel' | 'settings' | 'about';
+
+/** Opens the public project repository; no tracking parameters or browsing data are attached. */
+export const websiteUrl = (_path: WebsitePath, _place: LinkPlace) =>
+  'https://github.com/HackerO112/Nimo-pilot';
