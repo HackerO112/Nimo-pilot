@@ -37,6 +37,8 @@ jobs:
         run: pnpm lint
       - name: Unit tests
         run: pnpm test
+      - name: Install Chrome for Testing
+        run: pnpm install-chrome
       - name: Browser scenarios
         run: pnpm autorun scenarios
       - name: Build extension
