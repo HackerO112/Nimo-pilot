@@ -1,0 +1,7 @@
+NimoPilot includes and modifies source code from the Nanobrowser project:
+
+https://github.com/nanobrowser/nanobrowser
+
+The upstream source is licensed under the Apache License, Version 2.0. The upstream LICENSE text is retained in this repository. NimoPilot-specific branding, documentation, and modifications are maintained by the NimoPilot project.
+
+Apache License 2.0: https://www.apache.org/licenses/LICENSE-2.0
