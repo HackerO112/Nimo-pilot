@@ -1,7 +1,9 @@
 # Security Policy
 
-## Reporting a Vulnerability
+## Reporting a vulnerability
 
-If you find a security vulnerability, please **do not** disclose it in public issues, pull requests or discussions.
+Please do not disclose security vulnerabilities in public issues, pull requests, or discussions.
 
-Report it through a [GitHub Security Advisory](https://github.com/nanobrowser/nanobrowser/security/advisories/new), so it can be fixed before it is made public.
+Use a [private GitHub Security Advisory](https://github.com/HackerO112/Nimo-pilot/security/advisories/new) for this repository. Include the affected version, browser version, steps to reproduce, and any relevant logs with secrets removed.
+
+Do not include API keys, passwords, cookies, session tokens, or private browsing data in a report.
