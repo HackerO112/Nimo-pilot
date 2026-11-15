@@ -1,46 +1,17 @@
-name: NimoPilot source bootstrap and verification
+name: NimoPilot source verification
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - production/nimopilot-source-import
-    paths:
-      - .github/workflows/nimopilot-bootstrap.yml
-  workflow_dispatch:
 
 concurrency:
-  group: nimopilot-source-bootstrap
+  group: nimopilot-source-verification
   cancel-in-progress: false
 
 jobs:
-  import-source:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    permissions:
-      contents: write
-    steps:
-      - name: Check out NimoPilot
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-        with:
-          ref: production/nimopilot-source-import
-          fetch-depth: 0
-      - name: Import pinned upstream source
-        env:
-          UPSTREAM_COMMIT: 6c4c0802a3967cb25e82f1249fcd68e79614c75f
-        run: |
-          git clone https://github.com/nanobrowser/nanobrowser.git /tmp/nanobrowser
-          git -C /tmp/nanobrowser checkout --detach "$UPSTREAM_COMMIT"
-          rsync -a --exclude='.git/' --exclude='.github/' --exclude='README.md' /tmp/nanobrowser/ ./
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if ! git diff --cached --quiet; then
-            git commit -m "Import pinned Nanobrowser source foundation"
-            git push origin HEAD:production/nimopilot-source-import
-          fi
-
   verify:
-    needs: import-source
     runs-on: ubuntu-latest
     timeout-minutes: 45
     permissions:
@@ -66,6 +37,8 @@ jobs:
         run: pnpm lint
       - name: Unit tests
         run: pnpm test
+      - name: Browser scenarios
+        run: pnpm autorun scenarios
       - name: Build extension
         run: pnpm build
       - name: Package extension
@@ -74,7 +47,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: nimopilot-source-build
+          name: nimopilot-production-candidate
           path: |
             dist/
             dist-zip/
