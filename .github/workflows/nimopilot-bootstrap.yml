@@ -8,25 +8,23 @@ on:
       - .github/workflows/nimopilot-bootstrap.yml
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 concurrency:
   group: nimopilot-source-bootstrap
   cancel-in-progress: false
 
 jobs:
-  import-and-verify:
+  import-source:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 20
+    permissions:
+      contents: write
     steps:
       - name: Check out NimoPilot
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           ref: production/nimopilot-source-import
           fetch-depth: 0
-
-      - name: Import pinned Nanobrowser source
+      - name: Import pinned upstream source
         env:
           UPSTREAM_COMMIT: 6c4c0802a3967cb25e82f1249fcd68e79614c75f
         run: |
@@ -41,39 +39,41 @@ jobs:
             git push origin HEAD:production/nimopilot-source-import
           fi
 
+  verify:
+    needs: import-source
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - name: Check out NimoPilot
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: production/nimopilot-source-import
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 24
           cache: pnpm
-
       - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.34.7
-          run_install: false
-
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.34.7 --activate
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
       - name: Type check
         run: pnpm type-check
-
       - name: Lint
         run: pnpm lint
-
       - name: Unit tests
         run: pnpm test
-
       - name: Build extension
         run: pnpm build
-
       - name: Package extension
         run: pnpm zip
-
       - name: Upload build artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: nimopilot-source-build
           path: |
