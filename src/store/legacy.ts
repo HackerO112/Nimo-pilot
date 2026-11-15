@@ -1,4 +1,4 @@
-// What the old Nanobrowser (0.2) left in chrome.storage.local. This version replaces it as an update, so its data is
+// What the old NimoPilot (0.2) left in chrome.storage.local. This version replaces it as an update, so its data is
 // still there: the worker moves what it can on its first start (src/extension/upgrade.ts), and the old conversations
 // stay until the user exports or deletes them in Settings → Data.
 import { createStorage } from './storage';
@@ -82,7 +82,7 @@ export function localTime(ms: number): string {
 
 /** The old conversations as one Markdown file: newest first, each message under its actor's name and time. */
 export function oldChatsMarkdown(chats: Array<{ chat: OldChat; messages: OldMessage[] }>, exportedAt: number): string {
-  const lines = ['# Nanobrowser v0.2: legacy conversations', '', `Exported on ${localTime(exportedAt)}.`];
+  const lines = ['# NimoPilot v0.2: legacy conversations', '', `Exported on ${localTime(exportedAt)}.`];
   const newestFirst = [...chats].sort((a, b) => (b.chat.updatedAt ?? 0) - (a.chat.updatedAt ?? 0));
   for (const { chat, messages } of newestFirst) {
     lines.push('', `## ${chat.title?.trim() || 'Untitled'}`, '', localTime(chat.createdAt ?? 0));
@@ -94,7 +94,7 @@ export function oldChatsMarkdown(chats: Array<{ chat: OldChat; messages: OldMess
 }
 
 export function oldChatsFilename(exportedAt: number): string {
-  return `nanobrowser-v0.2-conversations-${localTime(exportedAt).slice(0, 10)}.md`;
+  return `nimopilot-v0.2-conversations-${localTime(exportedAt).slice(0, 10)}.md`;
 }
 
 /** Reads every old conversation with its messages. */
