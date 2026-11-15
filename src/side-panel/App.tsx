@@ -223,10 +223,8 @@ export function App() {
     void settingsStorage.set(s => ({ ...s, defaultModel: next.model, reasoning: next.reasoning }));
   };
   const active = isActive(state.status);
-  const ratingCard = false; // No NimoPilot store listing exists yet.
-  /** Sends a command the user gave that starts a run; with the rating card showing, it is their Maybe later. */
+  /** Sends a command the user gave that starts a run. */
   const startRun = (command: PanelCommand) => {
-    if (ratingCard) ratingMovedOn();
     client?.send(command);
   };
   const history = state.entries.filter(e => e.kind === 'user').map(e => (e as { text: string }).text);
@@ -513,9 +511,7 @@ export function App() {
         history={history}
         notice={
           <>
-            {/* The What's new card comes first; the notices below still show under it. The rating card waits for it (useRatingCard). */}
             {whatsNew ? <WhatsNewCard release={whatsNew} /> : null}
-            {ratingCard ? <RatingCard /> : null}
             {attachError ? (
               <p className="text-xs text-amber-700 dark:text-amber-300" role="alert">
                 {attachError}
