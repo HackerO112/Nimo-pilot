@@ -1,12 +1,12 @@
 {
-  "name": "nanobrowser",
-  "version": "0.3.0",
+  "name": "nimopilot",
+  "version": "0.5.2",
   "private": true,
-  "description": "AI web automation Chrome extension",
+  "description": "Free AI browser agent for Chrome and Edge",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nanobrowser/nanobrowser.git"
+    "url": "https://github.com/HackerO112/Nimo-pilot.git"
   },
   "type": "module",
   "scripts": {
