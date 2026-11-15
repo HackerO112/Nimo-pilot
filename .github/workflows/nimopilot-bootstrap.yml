@@ -1,0 +1,66 @@
+name: NimoPilot source verification
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch or commit to verify
+        required: true
+        default: production/nimopilot-source-import
+        type: string
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - production/nimopilot-source-import
+
+concurrency:
+  group: nimopilot-source-verification
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    steps:
+      - name: Check out NimoPilot
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || inputs.ref || github.ref_name }}
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 24
+      - name: Set up pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.34.7 --activate
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Type check
+        run: pnpm type-check
+      - name: Lint
+        run: pnpm lint
+      - name: Unit tests
+        run: pnpm test
+      - name: Install Chrome for Testing
+        run: pnpm install-chrome
+      - name: Browser scenarios
+        run: pnpm autorun scenarios
+      - name: Build extension
+        run: pnpm build
+      - name: Package extension
+        run: pnpm zip
+      - name: Upload build artifact
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nimopilot-production-candidate
+          path: |
+            dist/
+            dist-zip/
+          if-no-files-found: warn
+          retention-days: 14
