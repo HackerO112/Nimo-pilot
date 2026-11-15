@@ -33,6 +33,13 @@ describe('createStorage', () => {
     vi.unstubAllGlobals();
   });
 
+  it('keeps optional analytics disabled until the user opts in', () => {
+    expect(DEFAULT_SETTINGS.analyticsPing).toBe(false);
+    expect(DEFAULT_SETTINGS.analyticsStats).toBe(false);
+    expect(mergeSettings({}).analyticsPing).toBe(false);
+    expect(mergeSettings({}).analyticsStats).toBe(false);
+  });
+
   it('merges stored settings over the defaults', () => {
     expect(mergeSettings(undefined)).toEqual(DEFAULT_SETTINGS);
     expect(mergeSettings({ turnCap: 7 }).turnCap).toBe(7);
