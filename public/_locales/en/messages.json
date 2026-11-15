@@ -1,17 +1,17 @@
 {
   "extName": {
-    "message": "Nanobrowser"
+    "message": "NimoPilot"
   },
   "extDescription": {
     "message": "An AI agent that works in your browser, in a side panel beside the page"
   },
   "actionTitle": {
-    "message": "Open Nanobrowser"
+    "message": "Open NimoPilot"
   },
   "commandOpenPanel": {
-    "message": "Open the Nanobrowser panel"
+    "message": "Open the NimoPilot panel"
   },
   "menuAskAboutSelection": {
-    "message": "Ask Nanobrowser about this"
+    "message": "Ask NimoPilot about this"
   }
 }
