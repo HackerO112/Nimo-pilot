@@ -22,7 +22,6 @@ import { HistoryDrawer } from './History';
 import { Cards, containsCardNumber } from './Cards';
 import { NoticeCard } from './NoticeCard';
 import { WhatsNewCard, useWhatsNew } from './WhatsNewCard';
-import { RatingCard, ratingMovedOn, useRatingCard } from './RatingCard';
 import { TabBar } from './TabBar';
 import { QueueList, RunBar } from './RunControls';
 import type { MessageKey } from '@src/ui/i18n';
@@ -224,7 +223,7 @@ export function App() {
     void settingsStorage.set(s => ({ ...s, defaultModel: next.model, reasoning: next.reasoning }));
   };
   const active = isActive(state.status);
-  const ratingCard = useRatingCard(state.conversationId, state.startedAt, active, !!whatsNew);
+  const ratingCard = false; // No NimoPilot store listing exists yet.
   /** Sends a command the user gave that starts a run; with the rating card showing, it is their Maybe later. */
   const startRun = (command: PanelCommand) => {
     if (ratingCard) ratingMovedOn();
