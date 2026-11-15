@@ -43,7 +43,7 @@ describe('the old conversations', () => {
   it('writes one Markdown file, newest first, each message under its actor and time', async () => {
     fakeLocal(old);
     const md = oldChatsMarkdown(await readOldChats(), 1760000000000);
-    expect(md.startsWith('# Nanobrowser v0.2: legacy conversations\n')).toBe(true);
+    expect(md.startsWith('# NimoPilot v0.2: legacy conversations\n')).toBe(true);
     expect(md.indexOf('## Compare laptops')).toBeLessThan(md.indexOf('## Find a flight'));
     expect(md).toContain(`**User** · ${localTime(1751000000000)}\n\nFind a cheap flight to a made-up city.`);
     expect(md).toContain('**Navigator** · ');
@@ -54,7 +54,7 @@ describe('the old conversations', () => {
 
   it('names the file with the date', () => {
     expect(oldChatsFilename(new Date(2026, 9, 12, 9, 5).getTime())).toBe(
-      'nanobrowser-v0.2-conversations-2026-10-12.md',
+      'nimopilot-v0.2-conversations-2026-10-12.md',
     );
   });
 
