@@ -1,0 +1,17 @@
+{
+  "extName": {
+    "message": "NimoPilot"
+  },
+  "extDescription": {
+    "message": "在你的瀏覽器中工作的 AI 代理程式，位於頁面旁的側邊面板中"
+  },
+  "actionTitle": {
+    "message": "開啟 NimoPilot"
+  },
+  "commandOpenPanel": {
+    "message": "開啟 NimoPilot 側邊面板"
+  },
+  "menuAskAboutSelection": {
+    "message": "向 NimoPilot 詢問這段內容"
+  }
+}
