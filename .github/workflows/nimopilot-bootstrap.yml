@@ -1,0 +1,83 @@
+name: NimoPilot source bootstrap and verification
+
+on:
+  push:
+    branches:
+      - production/nimopilot-source-import
+    paths:
+      - .github/workflows/nimopilot-bootstrap.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nimopilot-source-bootstrap
+  cancel-in-progress: false
+
+jobs:
+  import-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out NimoPilot
+        uses: actions/checkout@v4
+        with:
+          ref: production/nimopilot-source-import
+          fetch-depth: 0
+
+      - name: Import pinned Nanobrowser source
+        env:
+          UPSTREAM_COMMIT: 6c4c0802a3967cb25e82f1249fcd68e79614c75f
+        run: |
+          git clone https://github.com/nanobrowser/nanobrowser.git /tmp/nanobrowser
+          git -C /tmp/nanobrowser checkout --detach "$UPSTREAM_COMMIT"
+          rsync -a --exclude='.git' --exclude='README.md' --exclude='.github/workflows/file-guard.yml' /tmp/nanobrowser/ ./
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Import pinned Nanobrowser source foundation"
+            git push origin HEAD:production/nimopilot-source-import
+          fi
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.34.7
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type check
+        run: pnpm type-check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Unit tests
+        run: pnpm test
+
+      - name: Build extension
+        run: pnpm build
+
+      - name: Package extension
+        run: pnpm zip
+
+      - name: Upload build artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nimopilot-source-build
+          path: |
+            dist/
+            dist-zip/
+          if-no-files-found: warn
+          retention-days: 14
