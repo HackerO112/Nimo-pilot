@@ -24,7 +24,9 @@ NimoPilot is an AI agent for browser tasks. Give it a goal in plain language. It
 - **Side-panel agent:** work alongside the page without switching to another app.
 - **Browser automation:** observe pages, navigate, click, scroll, and fill forms.
 - **Task history:** revisit conversations and continue tasks.
-- **Pause, stop, and user hand-off:** keep control when a task needs your input.
+- **Stop and steer:** stop a run, queue follow-up instructions while it works, and edit or remove queued messages.
+- **Recovery:** resume a task after a service-worker interruption when its saved state can be restored.
+- **User hand-off:** complete sensitive or consequential steps yourself when the agent asks you to take over.
 - **Write approvals:** submitting, sending, deleting, and uploading can require confirmation.
 - **Site permissions:** allow, ask, or block automation by site.
 - **Multiple AI providers:** configure supported cloud providers or compatible local model servers.
@@ -45,6 +47,7 @@ Third-party AI providers may apply their own API charges, quotas, and rate limit
 - The distributed NimoPilot build has no configured NimoPilot analytics destination; analytics settings are off by default.
 - Webpage content is untrusted data and must not override your instructions.
 - Sensitive actions are subject to permission checks and user confirmation. Payments, access grants, and secret entry remain your responsibility.
+- Chrome controls access to protected browser pages and system UI. NimoPilot cannot bypass those restrictions or suppress browser security indicators.
 
 Read the [Privacy Policy](PRIVACY.md) before use. Browser automation can make mistakes; supervise tasks, especially on pages that send messages, change records, upload files, or spend money.
 
