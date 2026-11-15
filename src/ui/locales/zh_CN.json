@@ -465,5 +465,6 @@
   "models.noReasoning": "不推理",
   "notice.reasoningDropped": "此模型不接受推理设置；将不使用该设置继续。",
   "notice.imagesDropped": "此模型不接受图片；将不使用图片继续。",
-  "notice.stopped": "已停止 · 接下来要 NimoPilot 做什么？"
+  "notice.stopped": "已停止 · 接下来要 NimoPilot 做什么？",
+  "privacy.offline": "此版本已禁用分析功能，不会向 NimoPilot 发送使用情况遥测数据。AI 任务数据只会发送给你配置的模型服务商。"
 }
