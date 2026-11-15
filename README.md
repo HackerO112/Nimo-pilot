@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/HackerO112/Nimo-pilot">
-    <img src="brand/logo-horizontal.png" alt="NimoPilot logo" width="260" />
+    <img src="/logo-horizontal.png" alt="NimoPilot logo" width="260" />
   </a>
 </p>
 
